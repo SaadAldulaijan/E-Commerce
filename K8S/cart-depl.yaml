@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: cartapi-depl
+spec: 
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cartapi
+  template:
+    metadata:
+      labels:
+        app: cartapi
+    spec:
+      containers:
+        - name: cartapi
+          image: saadaldulaijan/cartapi:latest
+---
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cartapi-cluster-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: cartapi
+  ports:
+  - name: cartapi
+    protocol: TCP
+    port: 80
+    targetPort: 80
